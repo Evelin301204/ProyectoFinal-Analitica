@@ -219,25 +219,67 @@ M_std_f = scaler.fit_transform(M_f) if len(M_f) > 2 else M_std
 # ─────────────────────────────────────────────
 st.markdown("# 🌫️ Calidad del Aire — Ciudad de México")
 st.markdown(f"<div style='color:#7a8499;font-size:0.85rem;margin-bottom:1.5rem;'>Red Automática de Monitoreo Atmosférico (RAMA) · SEDEMA / SIMAT · Periodo: {anio_rango[0]}–{anio_rango[1]}</div>", unsafe_allow_html=True)
+st.info("""
+**Fuente:** Red Automática de Monitoreo Atmosférico (RAMA)
 
+**Institución:** Secretaría del Medio Ambiente (SEDEMA)
+
+**Periodo de estudio:** 2015–2023
+
+**Variables analizadas:** CO, NO, NO₂, NOX, O₃, PM10, PM2.5 y SO₂
+""")
 # ─────────────────────────────────────────────
 # KPIs
 # ─────────────────────────────────────────────
-cols_kpi = st.columns(len(CONTAMINANTES))
-for col, cont in zip(cols_kpi, CONTAMINANTES):
-    val  = df_f[cont].mean()
-    val_total = df[cont].mean()
-    delta_pct = (val - val_total) / val_total * 100
-    delta_color = "#e05252" if delta_pct > 0 else "#52e07e"
-    delta_sym   = "▲" if delta_pct > 0 else "▼"
-    col.markdown(f"""
-    <div class='kpi-card'>
-        <div class='kpi-value'>{val:.2f}</div>
-        <div class='kpi-label'>{cont}<br><span style='font-size:0.65rem;color:#4a5568;'>{UNIDADES[cont]}</span></div>
-        <div class='kpi-delta' style='color:{delta_color};'>{delta_sym} {abs(delta_pct):.1f}% vs total</div>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("## Panorama General")
 
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.metric(
+        "Periodo",
+        f"{df_f['anio'].min()}-{df_f['anio'].max()}"
+    )
+with col2:
+    st.metric(
+        "Registros",
+        f"{len(df_f):,}"
+    )
+with col3:
+    st.metric(
+        "Meses",
+        len(M_f)
+    )
+with col4:
+    st.metric(
+        "Contaminantes",
+        len(CONTAMINANTES)
+    )
+    
+st.markdown("## Indicadores Principales")
+
+col5, col6, col7, col8 = st.columns(4)
+
+with col5:
+    st.metric(
+        "O₃ promedio",
+        f"{df_f['O3'].mean():.1f} ppb"
+    )
+with col6:
+    st.metric(
+        "PM10 promedio",
+        f"{df_f['PM10'].mean():.1f} µg/m³"
+    )
+with col7:
+    st.metric(
+        "PM2.5 promedio",
+        f"{df_f['PM25'].mean():.1f} µg/m³"
+    )
+with col8:
+    st.metric(
+        "NO₂ promedio",
+        f"{df_f['NO2'].mean():.1f} ppb"
+    )
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
