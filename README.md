@@ -4,16 +4,16 @@ Dashboard interactivo desarrollado con Streamlit para el análisis de la calidad
 
 ## Características
 
-- 📊 Exploración y preprocesamiento de datos
-- 📈 Series temporales y tendencias
-- 🔍 Detección de outliers
-- 📅 Análisis de estacionalidad
-- 🌀 Análisis espectral mediante FFT
-- 🔬 Análisis multivariado:
+- Exploración y preprocesamiento de datos
+- Series temporales y tendencias
+- Detección de outliers
+- Análisis de estacionalidad
+- Análisis espectral mediante FFT
+- Análisis multivariado:
   - PCA
   - MDS
   - Mapeo de Sammon
-- 🔗 Estimación de correlaciones y correlación cruzada
+- Estimación de correlaciones y correlación cruzada
 
 ## Dataset
 
