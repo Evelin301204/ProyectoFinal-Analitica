@@ -1,37 +1,39 @@
-# Calidad del Aire en la Ciudad de México
+# 🌫️ Calidad del Aire en la Ciudad de México
 
-Dashboard interactivo desarrollado con Streamlit para el análisis de la calidad del aire en la Ciudad de México utilizando datos de la Red Automática de Monitoreo Atmosférico (RAMA).
+Proyecto final de Analítica y Visualización de Datos para la Licenciatura en Ciencia de Datos.
 
-## Características
+**Autores:**
 
-- Exploración y preprocesamiento de datos
-- Series temporales y tendencias
-- Detección de outliers
-- Análisis de estacionalidad
-- Análisis espectral mediante FFT
-- Análisis multivariado:
-  - PCA
-  - MDS
-  - Mapeo de Sammon
-- Estimación de correlaciones y correlación cruzada
+* Hernández Cortez Evelin Yatziri
+* Salceda Zeron Ingrid Yanik
 
-## Dataset
+Este proyecto presenta un análisis exploratorio, espectral y multivariado de la calidad del aire en la Ciudad de México utilizando datos de la Red Automática de Monitoreo Atmosférico (RAMA) administrada por la Secretaría del Medio Ambiente (SEDEMA).
 
-El proyecto utiliza datos de contaminantes atmosféricos de la Ciudad de México:
+El objetivo principal es identificar patrones temporales, estacionales y relaciones entre distintos contaminantes atmosféricos mediante técnicas de análisis de datos y visualización interactiva. Para ello se emplean métodos de análisis estadístico, transformadas rápidas de Fourier (FFT), análisis de componentes principales (PCA), escalamiento multidimensional (MDS), mapeo de Sammon y análisis de correlación.
 
-- CO
-- NO
-- NO2
-- NOX
-- O3
-- PM10
-- PM25
-- SO2
+Los contaminantes analizados son:
 
-## Instalación
+* Monóxido de carbono (CO)
+* Óxido nítrico (NO)
+* Dióxido de nitrógeno (NO₂)
+* Óxidos de nitrógeno (NOX)
+* Ozono (O₃)
+* Material particulado PM10
+* Material particulado PM2.5
+* Dióxido de azufre (SO₂)
 
-Clonar el repositorio:
+El dashboard permite explorar tendencias históricas, detectar eventos extremos, analizar ciclos periódicos de contaminación y estudiar la estructura multivariada de los datos mediante visualizaciones interactivas desarrolladas en Streamlit.
 
-```bash
-git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-cd TU_REPOSITORIO
+**Periodo analizado:** 2015–2023
+
+**Tecnologías utilizadas:**
+
+* Streamlit
+* Pandas
+* NumPy
+* Plotly
+* Scikit-Learn
+* SciPy
+
+**Link de la aplicación:**
+https://evelin301204-proyectofinal-anal-tica-dashboard-qxxqdo.streamlit.app/
