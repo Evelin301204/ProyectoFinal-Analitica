@@ -36,4 +36,4 @@ El dashboard permite explorar tendencias históricas, detectar eventos extremos,
 * SciPy
 
 **Link de la aplicación:**
-https://evelin301204-proyectofinal-anal-tica-dashboard-qxxqdo.streamlit.app/
+https://b5rdyqpkvedcirdojwznfn.streamlit.app/
