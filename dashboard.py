@@ -18,7 +18,6 @@ warnings.filterwarnings('ignore')
 # ─────────────────────────────────────────────
 st.set_page_config(
     page_title="Calidad del Aire CDMX",
-    page_icon="🌫️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -32,66 +31,74 @@ st.markdown("""
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: #0f1117;
-    border-right: 1px solid #1e2130;
-}
-section[data-testid="stSidebar"] * { color: #c9d1e0 !important; }
-section[data-testid="stSidebar"] .stSelectbox label,
-section[data-testid="stSidebar"] .stMultiSelect label,
-section[data-testid="stSidebar"] .stSlider label { color: #7a8499 !important; font-size: 0.78rem; }
-
-/* KPI cards */
-.kpi-card {
-    background: #1a1d2e;
-    border: 1px solid #252840;
+/* Panorama cards */
+.panorama-card {
+    background: #f0f4f8;
+    border: 1px solid #d0dce8;
     border-radius: 10px;
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.1rem;
     text-align: center;
 }
-.kpi-value { font-family: 'JetBrains Mono', monospace; font-size: 1.7rem; font-weight: 600; color: #7eb8f7; }
-.kpi-label { font-size: 0.72rem; color: #7a8499; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.2rem; }
-.kpi-delta { font-size: 0.8rem; margin-top: 0.15rem; }
-
-/* Tab styling */
-.stTabs [data-baseweb="tab-list"] { gap: 2px; background: #0f1117; border-bottom: 1px solid #1e2130; }
-.stTabs [data-baseweb="tab"] {
-    background: transparent;
-    color: #7a8499;
-    border-radius: 6px 6px 0 0;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
-    font-weight: 500;
+.panorama-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a5276;
 }
-.stTabs [aria-selected="true"] { background: #1a1d2e !important; color: #7eb8f7 !important; border-bottom: 2px solid #7eb8f7; }
+.panorama-label {
+    font-size: 0.72rem;
+    color: #5d7a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.2rem;
+}
+
+/* Indicador cards */
+.indicador-card {
+    background: #ffffff;
+    border: 1px solid #d0dce8;
+    border-left: 4px solid #2471a3;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+.indicador-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a5276;
+}
+.indicador-label {
+    font-size: 0.75rem;
+    color: #5d7a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
 /* Section headers */
 .section-title {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #4a5568;
+    color: #2471a3;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin: 1.2rem 0 0.5rem;
-    border-left: 3px solid #7eb8f7;
+    border-left: 3px solid #2471a3;
     padding-left: 0.6rem;
 }
 
 /* Insight boxes */
 .insight-box {
-    background: #131625;
-    border-left: 3px solid #7eb8f7;
+    background: #eaf4fb;
+    border-left: 3px solid #2471a3;
     border-radius: 0 8px 8px 0;
     padding: 0.9rem 1.1rem;
     font-size: 0.84rem;
-    color: #a0aec0;
+    color: #2c3e50;
     margin: 0.8rem 0;
     line-height: 1.6;
 }
-
-/* Main background */
-.main .block-container { background: #0b0e18; padding-top: 1.5rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -179,8 +186,8 @@ M_std_df = pd.DataFrame(M_std, index=M.index, columns=M.columns)
 # SIDEBAR — FILTROS GLOBALES
 # ─────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🌫️ Calidad del Aire CDMX")
-    st.markdown("<div style='color:#4a5568;font-size:0.75rem;margin-bottom:1.2rem;'>SEDEMA / SIMAT · 2015–2023</div>", unsafe_allow_html=True)
+    st.markdown("## Calidad del Aire CDMX")
+    st.markdown("<div style='color:#5d7a8a;font-size:0.75rem;margin-bottom:1.2rem;'>SEDEMA / SIMAT · 2015–2023</div>", unsafe_allow_html=True)
     st.divider()
 
     st.markdown("<div class='section-title'>Periodo</div>", unsafe_allow_html=True)
@@ -203,7 +210,7 @@ with st.sidebar:
         estaciones_sel = ['Invierno', 'Primavera', 'Verano', 'Otoño']
 
     st.divider()
-    st.markdown("<div style='color:#4a5568;font-size:0.7rem;'>Proyecto Final · Analítica y Visualización de Datos · ESCOM IPN</div>", unsafe_allow_html=True)
+    st.markdown("<div style='color:#8aacbf;font-size:0.7rem;'>Proyecto Final · Analítica y Visualización de Datos · ESCOM IPN</div>", unsafe_allow_html=True)
 
 # Aplicar filtros
 df_f = df[(df['anio'] >= anio_rango[0]) & (df['anio'] <= anio_rango[1]) &
@@ -217,78 +224,75 @@ M_std_f = scaler.fit_transform(M_f) if len(M_f) > 2 else M_std
 # ─────────────────────────────────────────────
 # ENCABEZADO
 # ─────────────────────────────────────────────
-st.markdown("# 🌫️ Calidad del Aire — Ciudad de México")
-st.markdown(f"<div style='color:#7a8499;font-size:0.85rem;margin-bottom:1.5rem;'>Red Automática de Monitoreo Atmosférico (RAMA) · SEDEMA / SIMAT · Periodo: {anio_rango[0]}–{anio_rango[1]}</div>", unsafe_allow_html=True)
-st.info("""
-**Fuente:** Red Automática de Monitoreo Atmosférico (RAMA)
+st.markdown("# Calidad del Aire — Ciudad de México")
+st.markdown(f"<div style='color:#5d7a8a;font-size:0.85rem;margin-bottom:0.5rem;'>Red Automática de Monitoreo Atmosférico (RAMA) · SEDEMA / SIMAT · Periodo: {anio_rango[0]}–{anio_rango[1]}</div>", unsafe_allow_html=True)
 
-**Institución:** Secretaría del Medio Ambiente (SEDEMA)
-
-**Periodo de estudio:** 2015–2023
-
-**Variables analizadas:** CO, NO, NO₂, NOX, O₃, PM10, PM2.5 y SO₂
-""")
 # ─────────────────────────────────────────────
-# KPIs
+# PANORAMA GENERAL
 # ─────────────────────────────────────────────
-st.markdown("## Panorama General")
+st.markdown("### Panorama General")
 
-col1, col2, col3, col4 = st.columns(4)
+# Fila 1: métricas del dataset
+n_registros = len(df_f)
+n_meses     = df_f['anio_mes'].nunique()
+n_conts     = len(CONTAMINANTES)
+periodo_str = f"{anio_rango[0]}–{anio_rango[1]}"
 
-with col1:
-    st.metric(
-        "Periodo",
-        f"{df_f['anio'].min()}-{df_f['anio'].max()}"
-    )
-with col2:
-    st.metric(
-        "Registros",
-        f"{len(df_f):,}"
-    )
-with col3:
-    st.metric(
-        "Meses",
-        len(M_f)
-    )
-with col4:
-    st.metric(
-        "Contaminantes",
-        len(CONTAMINANTES)
-    )
-    
-st.markdown("## Indicadores Principales")
+col_pan = st.columns(4)
+for col, val, label in zip(col_pan,
+    [periodo_str, f"{n_registros:,}", str(n_meses), str(n_conts)],
+    ["Periodo", "Registros", "Meses analizados", "Contaminantes"]
+):
+    col.markdown(f"""
+    <div class='panorama-card'>
+        <div class='panorama-value'>{val}</div>
+        <div class='panorama-label'>{label}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-col5, col6, col7, col8 = st.columns(4)
-
-with col5:
-    st.metric(
-        "O₃ promedio",
-        f"{df_f['O3'].mean():.1f} ppb"
-    )
-with col6:
-    st.metric(
-        "PM10 promedio",
-        f"{df_f['PM10'].mean():.1f} µg/m³"
-    )
-with col7:
-    st.metric(
-        "PM2.5 promedio",
-        f"{df_f['PM25'].mean():.1f} µg/m³"
-    )
-with col8:
-    st.metric(
-        "NO₂ promedio",
-        f"{df_f['NO2'].mean():.1f} ppb"
-    )
 st.markdown("<br>", unsafe_allow_html=True)
+
+# Fila 2: indicadores principales (4 contaminantes clave)
+st.markdown("**Indicadores Principales** — promedio en el periodo seleccionado")
+INDICADORES = [
+    ('O3',   'O₃ promedio'),
+    ('PM10', 'PM10 promedio'),
+    ('PM25', 'PM2.5 promedio'),
+    ('NO2',  'NO₂ promedio'),
+    ('CO',   'CO promedio'),
+    ('NOX',  'NOX promedio'),
+    ('SO2',  'SO₂ promedio'),
+    ('NO',   'NO promedio'),
+]
+cols_ind = st.columns(4)
+for i, (cont, etiqueta) in enumerate(INDICADORES[:4]):
+    val = df_f[cont].mean()
+    cols_ind[i].markdown(f"""
+    <div class='indicador-card'>
+        <div class='indicador-label'>{etiqueta}</div>
+        <div class='indicador-value'>{val:.1f} <span style='font-size:0.85rem;font-weight:400;color:#5d7a8a;'>{UNIDADES[cont]}</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+cols_ind2 = st.columns(4)
+for i, (cont, etiqueta) in enumerate(INDICADORES[4:]):
+    val = df_f[cont].mean()
+    cols_ind2[i].markdown(f"""
+    <div class='indicador-card'>
+        <div class='indicador-label'>{etiqueta}</div>
+        <div class='indicador-value'>{val:.1f} <span style='font-size:0.85rem;font-weight:400;color:#5d7a8a;'>{UNIDADES[cont]}</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.divider()
 
 # ─────────────────────────────────────────────
 # TABS
 # ─────────────────────────────────────────────
 tab1, tab2, tab3 = st.tabs([
-    "📊  Exploración y Preprocesamiento",
-    "🌀  Análisis Espectral",
-    "🔬  Análisis Multivariado y Correlación"
+    "  Exploración y Preprocesamiento",
+    "  Análisis Espectral",
+    "  Análisis Multivariado y Correlación"
 ])
 
 # ══════════════════════════════════════════════
@@ -326,11 +330,11 @@ with tab1:
             name=f'Outliers IQR ({mask_out.sum()})'
         ))
         fig_serie.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=340, margin=dict(l=10, r=10, t=20, b=10),
             legend=dict(orientation='h', y=-0.15),
-            xaxis=dict(showgrid=True, gridcolor='#1e2130'),
-            yaxis=dict(showgrid=True, gridcolor='#1e2130',
+            xaxis=dict(showgrid=True, gridcolor='#e2e8f0'),
+            yaxis=dict(showgrid=True, gridcolor='#e2e8f0',
                        title=f'{cont_serie} ({UNIDADES[cont_serie]})')
         )
         st.plotly_chart(fig_serie, use_container_width=True)
@@ -367,12 +371,12 @@ with tab1:
                                           f'{int(PALETA[i%len(PALETA)][5:7],16)},0.08)'
             ))
         fig_kde.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=320, margin=dict(l=10, r=10, t=20, b=10),
             xaxis_title='Concentración', yaxis_title='Densidad',
             legend=dict(orientation='h', y=-0.2),
-            xaxis=dict(showgrid=True, gridcolor='#1e2130'),
-            yaxis=dict(showgrid=True, gridcolor='#1e2130')
+            xaxis=dict(showgrid=True, gridcolor='#e2e8f0'),
+            yaxis=dict(showgrid=True, gridcolor='#e2e8f0')
         )
         st.plotly_chart(fig_kde, use_container_width=True)
 
@@ -395,10 +399,10 @@ with tab1:
         marker=dict(size=6), name='Tendencia'
     ))
     fig_est.update_layout(
-        template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+        template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
         height=300, margin=dict(l=10, r=10, t=20, b=10),
         yaxis_title=f'{cont_est} ({UNIDADES[cont_est]})',
-        xaxis=dict(showgrid=False), yaxis=dict(showgrid=True, gridcolor='#1e2130'),
+        xaxis=dict(showgrid=False), yaxis=dict(showgrid=True, gridcolor='#e2e8f0'),
         legend=dict(orientation='h', y=-0.2)
     )
     st.plotly_chart(fig_est, use_container_width=True)
@@ -415,7 +419,7 @@ with tab1:
         aspect='auto'
     )
     fig_heat.update_layout(
-        template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+        template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
         height=300, margin=dict(l=10, r=10, t=20, b=10),
         xaxis_title='Mes', yaxis_title='Año'
     )
@@ -441,12 +445,12 @@ with tab1:
         points='outliers'
     )
     fig_box.update_layout(
-        template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+        template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
         height=320, margin=dict(l=10, r=10, t=20, b=10),
         showlegend=False,
         xaxis_title='Estación del año',
         yaxis_title=f'{cont_box} ({UNIDADES[cont_box]})',
-        yaxis=dict(showgrid=True, gridcolor='#1e2130')
+        yaxis=dict(showgrid=True, gridcolor='#e2e8f0')
     )
     st.plotly_chart(fig_box, use_container_width=True)
 
@@ -484,12 +488,12 @@ with tab2:
             name='Tendencia lineal'
         ))
         fig_t.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=280, margin=dict(l=10, r=10, t=10, b=10),
             legend=dict(orientation='h', y=-0.2),
             yaxis=dict(title=f'{cont_fft} ({UNIDADES[cont_fft]})',
-                       showgrid=True, gridcolor='#1e2130'),
-            xaxis=dict(showgrid=True, gridcolor='#1e2130')
+                       showgrid=True, gridcolor='#e2e8f0'),
+            xaxis=dict(showgrid=True, gridcolor='#e2e8f0')
         )
         st.plotly_chart(fig_t, use_container_width=True)
 
@@ -510,11 +514,11 @@ with tab2:
                                   annotation_text=label, annotation_position='top',
                                   annotation_font_color=col_ref, annotation_font_size=10)
         fig_sp.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=280, margin=dict(l=10, r=10, t=10, b=10),
             xaxis_title='Período (días)', yaxis_title='Potencia espectral',
-            xaxis=dict(showgrid=True, gridcolor='#1e2130'),
-            yaxis=dict(showgrid=True, gridcolor='#1e2130')
+            xaxis=dict(showgrid=True, gridcolor='#e2e8f0'),
+            yaxis=dict(showgrid=True, gridcolor='#e2e8f0')
         )
         st.plotly_chart(fig_sp, use_container_width=True)
 
@@ -527,9 +531,9 @@ with tab2:
     pot_top    = potencia[mask2][top_idx]
 
     def clasificar_ciclo(p):
-        if 340 <= p <= 390: return '📅 Anual'
-        if 160 <= p <= 200: return '📅 Semianual'
-        if 6 <= p <= 8:     return '📅 Semanal'
+        if 340 <= p <= 390: return 'Anual'
+        if 160 <= p <= 200: return 'Semianual'
+        if 6 <= p <= 8:     return 'Semanal'
         return '—'
 
     tabla_freq = pd.DataFrame({
@@ -571,14 +575,14 @@ with tab2:
     # Error de reconstrucción
     rmse = np.sqrt(np.mean((serie - rec)**2))
     fig_rec.update_layout(
-        template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+        template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
         height=300, margin=dict(l=10, r=10, t=20, b=10),
         legend=dict(orientation='h', y=-0.2),
         title=dict(text=f'RMSE de reconstrucción: {rmse:.4f} {UNIDADES[cont_fft]}',
                    font=dict(size=12, color='#7a8499'), x=0),
         yaxis=dict(title=f'{cont_fft} ({UNIDADES[cont_fft]})',
-                   showgrid=True, gridcolor='#1e2130'),
-        xaxis=dict(showgrid=True, gridcolor='#1e2130')
+                   showgrid=True, gridcolor='#e2e8f0'),
+        xaxis=dict(showgrid=True, gridcolor='#e2e8f0')
     )
     st.plotly_chart(fig_rec, use_container_width=True)
 
@@ -621,10 +625,10 @@ with tab3:
         fig_scree.add_hline(y=90, line_dash='dash', line_color='#e05252',
                              annotation_text='90%', secondary_y=True)
         fig_scree.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=300, margin=dict(l=10, r=10, t=10, b=10),
             legend=dict(orientation='h', y=-0.2),
-            yaxis=dict(title='Varianza explicada (%)', showgrid=True, gridcolor='#1e2130'),
+            yaxis=dict(title='Varianza explicada (%)', showgrid=True, gridcolor='#e2e8f0'),
             yaxis2=dict(title='Acumulada (%)')
         )
         st.plotly_chart(fig_scree, use_container_width=True)
@@ -641,7 +645,7 @@ with tab3:
             zmin=-1, zmax=1, text_auto='.2f', aspect='auto'
         )
         fig_load.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=300, margin=dict(l=10, r=10, t=10, b=10),
             coloraxis_colorbar=dict(title='Loading')
         )
@@ -682,13 +686,13 @@ with tab3:
     fig_biplot.add_hline(y=0, line_dash='dash', line_color='#333', line_width=1)
     fig_biplot.add_vline(x=0, line_dash='dash', line_color='#333', line_width=1)
     fig_biplot.update_layout(
-        template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+        template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
         height=420, margin=dict(l=10, r=10, t=10, b=10),
         legend=dict(title='Estación', orientation='h', y=-0.15),
         xaxis=dict(title=f'PC1 ({varianza[0]*100:.1f}% var.)',
-                   showgrid=True, gridcolor='#1e2130'),
+                   showgrid=True, gridcolor='#e2e8f0'),
         yaxis=dict(title=f'PC2 ({varianza[1]*100:.1f}% var.)',
-                   showgrid=True, gridcolor='#1e2130')
+                   showgrid=True, gridcolor='#e2e8f0')
     )
     st.plotly_chart(fig_biplot, use_container_width=True)
 
@@ -739,13 +743,13 @@ with tab3:
                     hovertemplate='<b>%{text}</b><br>D1: %{x:.2f}<br>D2: %{y:.2f}'
                 ))
         fig_m.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=340, margin=dict(l=10, r=10, t=30, b=10),
             title=dict(text=f'{titulo} · Stress = {stress_val:.4f}',
                        font=dict(size=11, color='#7a8499')),
             legend=dict(orientation='h', y=-0.18),
-            xaxis=dict(title='Dimensión 1', showgrid=True, gridcolor='#1e2130'),
-            yaxis=dict(title='Dimensión 2', showgrid=True, gridcolor='#1e2130')
+            xaxis=dict(title='Dimensión 1', showgrid=True, gridcolor='#e2e8f0'),
+            yaxis=dict(title='Dimensión 2', showgrid=True, gridcolor='#e2e8f0')
         )
         col.plotly_chart(fig_m, use_container_width=True)
 
@@ -779,7 +783,7 @@ with tab3:
             zmin=-1, zmax=1, text_auto='.2f', aspect='auto'
         )
         fig_corr.update_layout(
-            template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+            template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
             height=380, margin=dict(l=10, r=10, t=10, b=10),
             coloraxis_colorbar=dict(title='r Pearson')
         )
@@ -833,12 +837,12 @@ with tab3:
     fig_cc.add_hline(y=-conf_95, line_dash='dash', line_color='#f1a340')
     fig_cc.add_hline(y=0, line_color='#555', line_width=1)
     fig_cc.update_layout(
-        template='plotly_dark', paper_bgcolor='#0f1117', plot_bgcolor='#0f1117',
+        template='plotly_white', paper_bgcolor='#ffffff', plot_bgcolor='#f8fafc',
         height=300, margin=dict(l=10, r=10, t=20, b=10),
         xaxis_title=f'Desfase (días)  [negativo = {cont_x} precede a {cont_y}]',
         yaxis_title='Correlación cruzada',
-        xaxis=dict(showgrid=True, gridcolor='#1e2130'),
-        yaxis=dict(showgrid=True, gridcolor='#1e2130'),
+        xaxis=dict(showgrid=True, gridcolor='#e2e8f0'),
+        yaxis=dict(showgrid=True, gridcolor='#e2e8f0'),
         title=dict(text=f'Desfase de mayor correlación: {lag_max} días',
                    font=dict(size=11, color='#7a8499'), x=0)
     )
