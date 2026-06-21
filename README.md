@@ -1,6 +1,6 @@
 # Calidad del Aire en la Ciudad de México
 
-Proyecto final de Analítica y Visualización de Datos para la Licenciatura en Ciencia de Datos.
+Proyecto final de Analítica y Visualización de Datos.
 
 **Autores:**
 
